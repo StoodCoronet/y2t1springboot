@@ -1,0 +1,57 @@
+<!DOCTYPE>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+</head>
+
+<body>
+<div>
+    <form method="get" action="/show_stu_info_page">
+        按<select name="field">
+            <option value="default" selected="${field == 'default'}">默认</option>
+            <option value="stu_no" selected="${field == 'stu_no'}">学号</option>
+            <option value="stu_name" selected="${field == 'stu_name'}">姓名</option>
+            <option value="stu_pro" selected="${field == 'stu_pro'}">专业</option>
+            <option value="stu_class" selected="${field == 'stu_class'}">班级</option>
+        </select>查询：
+        <input type="text" name="condition" th:value="${condition}"/>
+        <input type="hidden" value="1" name="page_number" />
+        <input type="hidden" value="10" name="page_size" />
+        <input type="submit" value="查询"/>
+    </form>
+</div>
+<div>
+    <table width="1000" border="1" cellspacing="1" cellpadding="2">
+        <tr>
+            <th width="65" scope="col">序号</th>
+            <th width="100" scope="col">学号</th>
+            <th width="69" scope="col">姓名</th>
+            <th width="142" scope="col">手机</th>
+            <th width="69" scope="col">班级</th>
+            <th width="150" scope="col">专业</th>
+            <th width="63" scope="col">性别</th>
+            <th width="123" scope="col">饭卡余额</th>
+            <th width="153" scope="col">操作</th>
+        </tr>
+        <div th:each="item, itemStat: ${student_list}">
+            <tr>
+                <td th:text="${itemStat.index + 1}"></td>
+                <td th:text="${item.stu_no}"></td>
+                <td th:text="${item.stu_name}"></td>
+                <td th:text="${item.stu_phone}"></td>
+                <td th:text="${item.stu_class}"></td>
+                <td th:text="${item.stu_pro}"></td>
+                <td th:text="${item.stu_sex}"></td>
+                <td th:text="${item.stu_account}"></td>
+                <td> <a th:href="@{'edit_student?stu_no=' + ${item.stu_no}}"
+                       th:text="修改"></a>
+                    <a th:href="@{'delete_student?stu_no=' + ${item.stu_no}}"
+                       th:text="删除"></a></td>
+            </tr>
+        </div>
+    </table>
+</div>
+</body>
+</html>

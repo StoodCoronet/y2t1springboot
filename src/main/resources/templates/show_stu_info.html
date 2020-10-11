@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div><a th:href="@{'show_insert_student'}" th:text="添加学生信息"></a>
+    </div>
+    <div><a th:href="@{'show_insert_student_autobind'}" th:text="添加学生信息-动态绑定"></a>
+    </div>
+    <tr>
+        <td>学号</td><td>姓名</td><td>手机号</td>
+        <td>性别</td><td>专业</td><td>操作</td>
+    </tr>
+    <div th:each="item, itemStat:${stu_list}">
+        <tr>
+            <td th:text="${item.stu_no}"></td>
+            <td th:text="${item.stu_name}"></td>
+            <td th:text="${item.stu_phone}"></td>
+            <td th:text="${item.stu_sex}"></td>
+            <td th:text="${item.stu_pro}"></td>
+            <td>
+                <a th:href="@{'show_edit_student_autobind?stu_no='
+                + ${item.stu_no}}" th:text="修改"></a>
+                <a href="@{'#'}" th:text="删除"></a>
+            </td>
+        </tr>
+    </div>
+</body>
+</html>

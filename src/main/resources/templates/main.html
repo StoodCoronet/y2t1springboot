@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    已经进入主页面了。。
+    <div><a th:href="@{'show_all_stu_info'}" th:text="显示所有学生"></a></div>
+    <div><a th:href="@{'show_stu_info_page?field=default&condition=&page_number=1&page_size=10'}" th:text="显示分页学生信息"></a></div>
+    <div>
+    <a th:href="@{'show_timetable_web?stu_no='
+    + ${session.a_stu_info.stu_no}}"
+            th:text="显示课表"></a></div>
+    <div><a th:href="@{'show_upload'}" th:text="上传下载"></a></div>
+    <!-- 学号：<div th:text="${stu_info.stu_no}"></div>
+    姓名：<div th:text="${stu_info.stu_name}"></div>-->
+
+    </body>
+</html>

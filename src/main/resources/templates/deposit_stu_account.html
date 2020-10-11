@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <script type="text/javascript" src="/js/jquery-3.3.1.js"></script>
+    <style type="text/css">
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        #container {
+            display: inline-block;
+            position: relative;
+            top: 200px;
+            padding: 40px 20px;
+            padding-bottom: 0;
+            box-sizing: content-box;
+            height: 320px;
+            border: 1px solid #494ca2;
+            border-radius: 8px;
+            box-shadow: 0 0 5px #7f78d2;
+        }
+
+        #container tr td:first-child {
+            float: right;
+        }
+
+        #container tr td div {
+            display: inline-block;
+            height: 2em;
+            text-align: center;
+            line-height: 2em;
+        }
+
+        .moneyDiv {
+            width: 5em;
+            height: 2em;
+            border: 1px solid #d7d7d7;
+            border-radius: 8%;
+            background-color: #f7f7f7;
+            box-shadow: 0px 0px 4px #e5e5e5;
+            cursor: pointer;
+            color: #23374d;
+            transition: .3s;
+        }
+
+        .selected {
+            background: #ffe7d1;
+        }
+
+        .moneyDiv:hover {
+            border: 1px solid #ff9007;
+        }
+
+        #container table {
+            margin: 0px auto;
+            border-collapse: separate;
+            border-spacing: 10px 10px;
+        }
+
+        #container input[name='money'] {
+            width: 8em;
+            margin-top: 10px;
+            font-weight: 500;
+        }
+
+        #container #payMethod div {
+            width: 30%;
+            height: 3em;
+            float: left;
+            box-sizing: border-box;
+            margin-right: 10px;
+            margin-top: 20px;
+            cursor: pointer;
+            /*background: red;*/
+        }
+
+        #payMethod div:first-child {
+            background-image: url('/image/ayipay.jpg');
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center;
+        }
+
+        #payMethod div:nth-child(2) {
+            background-image: url('/image/wx.jpeg');
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center;
+        }
+
+        #payMethod div:nth-child(3) {
+            background-image: url('/image/bankcard.jpg');
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center;
+        }
+
+        .selectPayMethod {
+            border: 2px solid #fbc1bc;
+            border-radius: 5px;
+        }
+
+        #container strong {
+            display: none;
+            color: #f34573;
+            font-weight: 500;
+            font-size: 14px;
+            margin-top: 6px;
+        }
+
+        input[type='submit'] {
+            display: inline-block;
+            width: 200px;
+            height: 2.5em;
+            cursor: pointer;
+            background-color: #108ee9;
+            color: #fff;
+            font-weight: 700;
+            outline: none;
+            border: none;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+
+        input {
+            height: 2em;
+            padding: 0px 5px;
+            /*			outline-color: red;*/
+            margin-right: 10px;
+        }
+
+        input::-webkit-outer-spin-button,
+
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+    </style>
+    <script type="text/javascript">
+        var oMoney;
+        var oPayMethod;
+        var oMoneyWarning = $('strong:eq(0)');
+        var oPayMethodWarning = $('strong:eq(1)');
+        $(function() {
+            oMoneyWarning = $('strong:eq(0)');
+            oPayMethodWarning = $('strong:eq(1)');
+            oPayMethod=$('input[name="payMethod"]');
+            oMoney = $('#money')
+            $.each($('.moneyDiv'), function(i, v) {
+                $(v).click(function() {
+                    $(v).addClass("selected");
+                    oMoney.val($(v).attr('val'));
+                    oMoneyWarning.css('display', 'none');
+                    removeSelectedClass(i);
+                });
+            });
+
+            $.each($('#payMethod div'), function(i, v) {
+                $(v).click(function() {
+                    $(v).addClass("selectPayMethod");
+                    oPayMethod.val($(v).attr('val'));
+                    oPayMethodWarning.css('display', 'none');
+                    removeSelectedMethodClass(i);
+                })
+            });
+
+            oMoney.focus(function() {
+                removeSelectedClass();
+                oMoneyWarning.css('display', 'none');
+            });
+
+            oMoney.blur(function() {
+                if (oMoney.val() == undefined || oMoney.val() == '') {
+                    oMoneyWarning.css('display', 'inline-block');
+                }
+            });
+        })
+
+        function removeSelectedClass(index) {
+            $.each($('.moneyDiv'), function(i, v) {
+                if (i != index) {
+                    $(v).removeClass("selected");
+                }
+            });
+        }
+
+        function removeSelectedMethodClass(index) {
+            $.each($('#payMethod div'), function(i, v) {
+                if (i != index) {
+                    $(v).removeClass("selectPayMethod");
+                }
+            });
+        }
+
+        function checkSubmit() {
+            var flag = true;
+            if (oMoney.val() == undefined || oMoney.val() == '') {
+                oMoneyWarning.css('display', 'inline-block');
+                flag = false;
+            }
+            if (oPayMethod.val() == undefined||oPayMethod.val() == '') {
+                oPayMethodWarning.css('display', 'inline-block');
+                flag = false;
+            }
+            return flag;
+        }
+    </script>
+</head>
+
+<body>
+<div align="center">
+    <div id="container">
+        <form action="/deposit_stu_account" onsubmit="return checkSubmit()">
+            <table>
+                <tr>
+                    <td>
+                        <div>充值金额:</div>
+                    </td>
+                    <td>
+                        <div class="moneyDiv" val="10">10元</div>
+                        <div class="moneyDiv" val="20">20元</div>
+                        <div class="moneyDiv" val="30">30元</div>
+                        <div class="moneyDiv" val="50">50元</div>
+                        <br>
+                        <input id="money" type="number" name="money">元
+                        <br>
+                        <strong>*充值金额不能为空</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div>充值渠道:</div>
+                    </td>
+                    <td id="payMethod">
+                        <div val="支付宝">
+                        </div>
+                        <div val="微信">
+                        </div>
+                        <div val="银行卡">
+                        </div>
+                        <br>
+                        <strong>*充值方式不能为空</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="hidden" name="payMethod" value="">
+                    </td>
+                    <td>
+                        <input type="submit" value="立即支付">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <form method="get" action="insert_student_autobind">
+        <div>学号：<input type="text" th:name="stu_no"/></div>
+        <div>姓名：<input type="text" th:name="stu_name"/></div>
+        <div>手机号：<input type="text" th:name="stu_phone"/></div>
+        <div>专业：
+            <select th:name="stu_pro">
+                <option value="计算机科学与技术">计算机科学与技术</option>
+                <option value="软件工程">软件工程</option>
+                <option value="物联网工程">物联网工程</option>
+            </select>
+        </div>
+        <div>性别：
+            <select th:name="stu_sex">
+                <option value="男">男</option>
+                <option value="女">女</option>
+            </select>
+        </div>
+        <div>班级：
+            <select th:name="stu_class">
+                <option value="180923104">180923104</option>
+                <option value="180923105">180923105</option>
+            </select>
+        </div>
+        <div>年龄：
+            <select th:name="stu_age">
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+            </select>
+        </div>
+        <div>
+            <input type="submit" value="提交"/>
+            <input type="reset" value="取消"/>
+        </div>
+    </form>
+</div>
+</body>
+</html>
